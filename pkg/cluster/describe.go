@@ -38,6 +38,8 @@ func PrintClusterDescription(connection *sdk.Connection, cluster *cmv1.Cluster) 
 	// Retrieve the details of the subscription:
 	var sub *amv1.Subscription
 	subID := cluster.Subscription().ID()
+	fmt.Printf("\n\nSubscription details : %v\n\n", cluster.Subscription())
+	fmt.Println("SubID is", subID)
 	if subID != "" {
 		subResponse, err := connection.AccountsMgmt().V1().
 			Subscriptions().
@@ -59,6 +61,7 @@ func PrintClusterDescription(connection *sdk.Connection, cluster *cmv1.Cluster) 
 	// Retrieve the details of the account:
 	var account *amv1.Account
 	accountID := sub.Creator().ID()
+	fmt.Println("AccountID is", accountID)
 	if accountID != "" {
 		accountResponse, err := connection.AccountsMgmt().V1().
 			Accounts().
@@ -82,11 +85,13 @@ func PrintClusterDescription(connection *sdk.Connection, cluster *cmv1.Cluster) 
 	if account.Organization() != nil && account.Organization().Name() != "" {
 		organization = account.Organization().Name()
 	}
+	fmt.Println("Organization name is", organization)
 
 	creator := account.Username()
 	if creator == "" {
 		creator = notAvailable
 	}
+	fmt.Println("Creator is", creator)
 
 	email := account.Email()
 	if email == "" {
@@ -97,6 +102,7 @@ func PrintClusterDescription(connection *sdk.Connection, cluster *cmv1.Cluster) 
 	if accountNumber == "" {
 		accountNumber = notAvailable
 	}
+	fmt.Println("Account number is", accountNumber)
 
 	// Find the details of the shard
 	shardPath, err := connection.ClustersMgmt().V1().Clusters().

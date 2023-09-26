@@ -655,6 +655,7 @@ func run(cmd *cobra.Command, argv []string) error {
 	}
 
 	cluster, err := c.CreateCluster(connection.ClustersMgmt().V1(), clusterConfig, args.dryRun)
+	fmt.Printf("%v", cluster)
 	if err != nil {
 		return fmt.Errorf("Failed to create cluster: %v", err)
 	}
